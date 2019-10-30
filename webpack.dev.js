@@ -96,5 +96,5 @@ module.exports = {
         contentBase: "./dist",
         hot: true,
         stats: "errors-only"
-    }
+    },
 };
