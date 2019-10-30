@@ -6,41 +6,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-//实现多页面打包func
-const setMPA = () => {
-    const entry = {};
-    const htmlwebpackplugins = [];
-    const entryFiles = glob.sync(path.join(__dirname, "src/*/index.js"));
-    Object.keys(entryFiles).forEach((index) => {
-        const file = entryFiles[index];
-        const match = file.match(/src\/(.*)\/index\.js/);
-        const pagename = match && match[1];
-        entry[pagename] = file;
-        htmlwebpackplugins.push(
-            new HtmlWebpackPlugin({
-                template: path.join(__dirname, `src/${pagename}/index.html`),
-                filename: `${pagename}.html`,
-                chunks: [pagename],
-                inject: true,
-                minify: {
-                    html5: true,
-                    removeComments: true,
-                    preserveLineBreaks: false,
-                    minifyCSS: true,
-                    minifyJS: true,
-                    collapseWhitespace: true
-                }
-            })
-        )
-    });
-    return {
-        entry,
-        htmlwebpackplugins
-    };
-};
-const { entry, htmlwebpackplugins } = setMPA();
 module.exports = {
-    entry,
+    entry: {
+        index: "./src/singlePagePack/index.js"
+    },
     output: {
         path: path.join(__dirname, "dist"),
         filename: '[name]_[chunkhash:4].js'
