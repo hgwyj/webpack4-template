@@ -95,6 +95,7 @@ module.exports = {
     devServer: {
         contentBase: "./dist",
         hot: true,
+        port: 8888,
         stats: "errors-only"
     },
     optimization: {
@@ -102,13 +103,12 @@ module.exports = {
             minSize: 0,
             cacheGroups: {
                 commons: {
-                    test:/(react|react-dom)/,
+                    test: /(react|react-dom)/,
                     name: 'commons',
                     chunks: 'all',
                     minChunks: 2
                 }
             }
         }
-    },
-    stats: "errors-only" //webapck编译日志打印级别
+    }
 };
