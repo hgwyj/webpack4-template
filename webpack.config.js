@@ -73,7 +73,7 @@ module.exports = {
         }),
         new OptimizeCSSAssetsPlugin({
             assetNameRegExp: /\.css$/g,
-            cssProcessor: require('cssnano')
+            cssProcessor: require('cssnano') //css处理器
         }),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'src/singlePagePack/index.html'),

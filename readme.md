@@ -10,14 +10,17 @@
 ~~~
 webpack开箱即用只支持js和json两种文件,通过loaders去支持其他文件类型并把它们转化成有效的模块
 ~~~
+
 > entry
 ~~~
 webpack程序打包的主入口
 ~~~
+
 > output
 ~~~
 打包文件输出目的地
 ~~~
+
 >mode
 ~~~
 代表当前打包的模式 - 默认production模式
@@ -25,12 +28,14 @@ webpack程序打包的主入口
 + production
 + development
 + none
+
 >module
 ~~~
 各种loader加载的区域
 
 loader的加载顺序-链式调用从后往前依次执行
 ~~~
+
 >文件指纹-打包输出的文件名后缀
 ~~~
 Hash:只要项目文件有修改,整个项目的构建hash值就会更改
@@ -39,6 +44,18 @@ Chunkhash:和webpack打包的chunk有关,不同的entry会生成不同的chunkha
 
 Contenthash:根据文件内容来定义hash,文件内容不变contenthast不变
 ~~~
+
+>webpack占位符
+
+|占位符名称|含义|
+|:-----:|:----:|
+|[ext]|资源后缀名|
+|[name]|文件名|
+|[path]|文件相对路径|
+|[folder]|文件所在文件夹名称|
+
+>loader作用简介
+
 |名称|描述|
 |----|----|
 |babel-loader|转换es6,es7等js新语法新特性|
@@ -50,13 +67,12 @@ Contenthash:根据文件内容来定义hash,文件内容不变contenthast不变
 |thread-loader|用于多进程打包js,css|
 |style-loader|将样式通过style标签插入到head中|
 |postcss-loader+autoprefixer|将样式进行自动补齐前缀|
->plugins
-~~~
-plugins进行实例化的区域
-~~~
+
+>plugins作用简介
+
 |名称|描述|
 |----|----|
-|optimize-css-assets-webpack-plugin|css压缩|
+|optimize-css-assets-webpack-plugin|css压缩(通常与cassnano配合使用)|
 |html-webpack-plugin|创建html去承载输出的js文件|
 |mini-css-extract-plugin|css压缩+使用link标签进行css的引用|
 |clean-webpack-plugin|清理构建目录|
