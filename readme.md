@@ -31,15 +31,25 @@ webpack程序打包的主入口
 
 loader的加载顺序-链式调用从后往前依次执行
 ~~~
+>文件指纹-打包输出的文件名后缀
+~~~
+Hash:只要项目文件有修改,整个项目的构建hash值就会更改
+
+Chunkhash:和webpack打包的chunk有关,不同的entry会生成不同的chunkhash值、
+
+Contenthash:根据文件内容来定义hash,文件内容不变contenthast不变
+~~~
 |名称|描述|
 |----|----|
-|babel-loader|转换es6,es7.js语法新特性|
-|css-loader|支持css文件的加载和解析|
+|babel-loader|转换es6,es7等js新语法新特性|
+|css-loader|支持css文件的加载和解析(将css文件转换成common.js对象)))|
 |less-loader|将less转换成css|
 |file-loader|进行图片文字的打包|
+|url-loader|处理图片和文字,可以设置较小的资源自动转换成base64|
 |raw-loader|将文字以字符串的形式导入|
 |thread-loader|用于多进程打包js,css|
 |style-loader|将样式通过style标签插入到head中|
+|postcss-loader+autoprefixer|将样式进行自动补齐前缀|
 >plugins
 ~~~
 plugins进行实例化的区域
@@ -47,6 +57,7 @@ plugins进行实例化的区域
 |名称|描述|
 |----|----|
 |optimize-css-assets-webpack-plugin|css压缩|
-|html-webpack-plugin|html压缩|
-|mini-css-extract-plugin|css压缩|
+|html-webpack-plugin|创建html去承载输出的js文件|
+|mini-css-extract-plugin|css压缩+使用link标签进行css的引用|
+|clean-webpack-plugin|清理构建目录|
 

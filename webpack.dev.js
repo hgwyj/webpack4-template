@@ -1,5 +1,6 @@
 "use strict";
 const path = require("path");
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -68,6 +69,7 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name]_[contenthash:8].css"
         }),
@@ -89,5 +91,10 @@ module.exports = {
                 removeComments: true
             }
         }),
-    ]
+    ],
+    devServer: {
+        contentBase: "./dist",
+        hot: true,
+        stats: "errors-only"
+    }
 };
