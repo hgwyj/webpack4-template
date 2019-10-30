@@ -31,7 +31,13 @@ module.exports = {
                 test: /.less$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    "css-loader",
+                    {
+                        loader: "css-loader",
+                        options: {
+                            importLoaders: 2,
+                            modules: true
+                        }
+                    },
                     "less-loader",
                     {
                         loader: "postcss-loader", //使用postcss进行css样式后缀的补全
