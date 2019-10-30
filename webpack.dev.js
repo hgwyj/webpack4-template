@@ -97,4 +97,18 @@ module.exports = {
         hot: true,
         stats: "errors-only"
     },
+    optimization: {
+        splitChunks: {
+            minSize: 0,
+            cacheGroups: {
+                commons: {
+                    test:/(react|react-dom)/,
+                    name: 'commons',
+                    chunks: 'all',
+                    minChunks: 2
+                }
+            }
+        }
+    },
+    stats: "errors-only" //webapck编译日志打印级别
 };

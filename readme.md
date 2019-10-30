@@ -78,3 +78,25 @@ Contenthash:根据文件内容来定义hash,文件内容不变contenthast不变
 |mini-css-extract-plugin|css压缩+使用link标签进行css的引用|
 |clean-webpack-plugin|清理构建目录|
 
+>splitchunks进行模块的分离
+~~~
+对于经常使用的模块进行分离,减少打包体积
+~~~
+
+>treeshaking
+~~~
+treeshaking在mode为production的时候进行自动开启
+只能对es6语法生效
+(*cjs不支持)
+~~~
+
+>scope hoisting
+~~~
+mode为production的时候默认开启进行作用域的合并
+未开启之前编译后会出现大量的闭包函数,这样会加大内存的开销
+只能对es6语法生效
+(*cjs不支持)
+~~~
+
+
+

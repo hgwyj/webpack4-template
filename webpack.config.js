@@ -4,7 +4,7 @@ const glob = require("glob");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 //实现多页面打包func
 const setMPA = () => {
     const entry = {};
@@ -18,8 +18,8 @@ const setMPA = () => {
         htmlwebpackplugins.push(
             new HtmlWebpackPlugin({
                 template: path.join(__dirname, `src/${pagename}/index.html`),
-                filename: `${pagename}.html`,
-                chunks: [pagename],
+                filename: `${pagename}/${pagename}.html`,
+                chunks: [pagename, "commons"],//script 标签进行引用模块名称
                 inject: true,
                 minify: {
                     html5: true,
@@ -42,9 +42,12 @@ module.exports = {
     entry,
     output: {
         path: path.join(__dirname, "dist"),
-        filename: '[name]_[chunkhash:4].js'
+        filename: '[name]/[name]_[chunkhash:4].js'
     },
     mode: "production",
+    resolve: {
+        extensions: [".js", ".jsx", ".json"]
+    },
     module: {
         rules: [
             {
@@ -54,7 +57,7 @@ module.exports = {
             {
                 test: /.css$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    "style-loader", //在head标签钟生成style标签将样式自动生成在style标签中
                     "css-loader"
                 ]
             },
@@ -62,7 +65,13 @@ module.exports = {
                 test: /.less$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    "css-loader",
+                    {
+                        loader: "css-loader",
+                        options: {
+                            importLoaders: 2,
+                            modules: true
+                        }
+                    },
                     "less-loader",
                     {
                         loader: "postcss-loader", //使用postcss进行css样式后缀的补全
@@ -101,11 +110,24 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: "[name]_[contenthash:8].css"
+            filename: "[name]/[name]_[contenthash:4].css"
         }),
         new OptimizeCSSAssetsPlugin({
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano') //css处理器
         })
-    ].concat(htmlwebpackplugins)
+    ].concat(htmlwebpackplugins),
+    optimization: {
+        splitChunks: {
+            minSize: 0,
+            cacheGroups: {
+                commons: {
+                    test: /(react|react-dom)/,
+                    name: 'commons',
+                    chunks: 'all',
+                    minChunks: 2
+                }
+            }
+        }
+    }
 };
