@@ -73,7 +73,8 @@ Contenthash:根据文件内容来定义hash,文件内容不变contenthast不变
 |名称|描述|
 |----|----|
 |optimize-css-assets-webpack-plugin|css压缩(通常与cassnano配合使用)|
-|html-webpack-plugin|创建html去承载输出的js文件|
+|html-webpack-plugin|创建html去承载输出的js文件(通过参数进行html压缩)|
+|uglifijs-webpack-plugin|webpack4内置(mode=product 默认开启js压缩)|
 |mini-css-extract-plugin|css压缩+使用link标签进行css的引用|
 |clean-webpack-plugin|清理构建目录|
 
