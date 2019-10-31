@@ -4,7 +4,7 @@ class Search extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Text
+            Text: null
         };
     }
     loadComponent = () => {
@@ -12,6 +12,8 @@ class Search extends React.Component {
             this.setState({
                 Text: Text.default
             });
+        }).catch(e => {
+            console.log(e);
         });
     };
     render() {

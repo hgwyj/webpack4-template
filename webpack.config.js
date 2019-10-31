@@ -9,7 +9,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const setMPA = () => {
     const entry = {};
     const htmlwebpackplugins = [];
-    const entryFiles = glob.sync(path.join(__dirname, "src/*/index.*(js|jsx)"));
+    const entryFiles = glob.sync(path.join(__dirname, "src/*/index.*(js|jsx|tsx)"));
     Object.keys(entryFiles).forEach((index) => {
         const file = entryFiles[index];
         const match = file.match(/src\/(.*)\/index\.(js|jsx)$/);
@@ -18,7 +18,7 @@ const setMPA = () => {
         htmlwebpackplugins.push(
             new HtmlWebpackPlugin({
                 template: path.join(__dirname, `src/${pagename}/index.html`),
-                filename: `${pagename}/${pagename}.html`,
+                filename: `${pagename}.html`,
                 chunks: [pagename, "commons"],//script 标签进行引用模块名称
                 inject: true,
                 minify: {
@@ -42,7 +42,7 @@ module.exports = {
     entry,
     output: {
         path: path.join(__dirname, "dist"),
-        filename: '[name]/[name]_[chunkhash:4].js'
+        filename: '[name]_[chunkhash:4].js'
     },
     mode: "production",
     resolve: {
@@ -109,7 +109,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
-            filename: "[name]/[name]_[contenthash:4].css"
+            filename: "[name]_[contenthash:4].css"
         }),
         new OptimizeCSSAssetsPlugin({
             assetNameRegExp: /\.css$/g,
