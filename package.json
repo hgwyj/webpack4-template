@@ -9,7 +9,11 @@
     "build:dev": "webpack --config webpack.dev.js",
     "build:ssr": "webpack --config webpack.config.ssr.js"
   },
-  "keywords": [],
+  "keywords": [
+    "webpack4",
+    "package",
+    "template"
+  ],
   "author": "perfecthg",
   "license": "ISC",
   "devDependencies": {
