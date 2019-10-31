@@ -46,13 +46,19 @@ module.exports = {
     },
     mode: "production",
     resolve: {
-        extensions: [".js", ".jsx", ".json"]
+        alias: {
+            "react": path.join(__dirname, "node_modules/react/cjs/react.production.min.js"),
+            "react-dom": path.join(__dirname, "node_modules/react-dom/cjs/react-dom.production.min.js"),
+            "lodash": path.join(__dirname, "node_modules/lodash/lodash.min.js"),
+        },
+        extensions: [".js", ".ts", ".jsx", ".json"] //指定解析的后缀webpack默认js|json
     },
     module: {
         rules: [
             {
                 test: /.(js|jsx)$/,
-                use: "babel-loader"
+                exclude: /node_modules/,
+                use: "babel-loader?cacheDirectory=true"  //再次编译使用缓存
             },
             {
                 test: /.css$/,
@@ -90,6 +96,16 @@ module.exports = {
                     loader: "file-loader",
                     options: {
                         name: "[name]_[hash:8].[ext]"
+                    }
+                }]
+            },
+            {
+                test: /.(png|jepg|jpg|gif)$/,
+                use: [{
+                    loader: "url-loader",
+                    options: {
+                        name: "[name]_[hash:8].[ext]",
+                        limit: 10240 // 小于10M文件使用url-loader
                     }
                 }]
             },
