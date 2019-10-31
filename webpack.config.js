@@ -60,7 +60,7 @@ module.exports = {
                 exclude: /node_modules/,
                 use: [
                     "babel-loader?cacheDirectory=true",//开启缓存,二次编译时使用缓存
-                    "eslint-loader"//增加eslint检测
+                    // "eslint-loader"//增加eslint检测
                 ]
             },
             {

@@ -1,0 +1,21 @@
+{
+  "name": "my-library",
+  "version": "1.0.0",
+  "description": "库文件打包模板",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "keywords": [
+    "library",
+    "webpack"
+  ],
+  "author": "perfecthg",
+  "license": "ISC",
+  "devDependencies": {
+    "terser-webpack-plugin": "^2.2.1",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  }
+}
