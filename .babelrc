@@ -3,5 +3,8 @@
         "@babel/preset-env",
         "@babel/preset-react"
     ],
-    "plugins": []
+    "plugins": [
+        "@babel/plugin-syntax-dynamic-import", //babel动态import
+        "@babel/plugin-proposal-class-properties" //babel 将class中属性编译插件
+    ]
 }

@@ -9,10 +9,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const setMPA = () => {
     const entry = {};
     const htmlwebpackplugins = [];
-    const entryFiles = glob.sync(path.join(__dirname, "src/*/index.js"));
+    const entryFiles = glob.sync(path.join(__dirname, "src/*/index.*(js|jsx)"));
     Object.keys(entryFiles).forEach((index) => {
         const file = entryFiles[index];
-        const match = file.match(/src\/(.*)\/index\.js/);
+        const match = file.match(/src\/(.*)\/index\.(js|jsx)$/);
         const pagename = match && match[1];
         entry[pagename] = file;
         htmlwebpackplugins.push(
@@ -51,7 +51,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /.js$/,
+                test: /.(js|jsx)$/,
                 use: "babel-loader"
             },
             {
@@ -68,7 +68,6 @@ module.exports = {
                     {
                         loader: "css-loader",
                         options: {
-                            importLoaders: 2,
                             modules: true
                         }
                     },
@@ -76,13 +75,13 @@ module.exports = {
                     {
                         loader: "postcss-loader", //使用postcss进行css样式后缀的补全
                         options: {
-                            plugins: () => {
-                                require("autoprefixer")({
+                            plugins: () => [
+                                require('autoprefixer')({
                                     browsers: ['last 2 version', '>1%', 'ios 7']
-                                });
-                            }
+                                })
+                            ]
                         }
-                    }
+                    },
                 ]
             },
             {
