@@ -10,7 +10,7 @@
     "build:ssr": "webpack --config webpack.config.ssr.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "perfecthg",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.6.4",
