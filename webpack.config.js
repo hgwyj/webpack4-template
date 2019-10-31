@@ -51,7 +51,7 @@ module.exports = {
             "react-dom": path.join(__dirname, "node_modules/react-dom/cjs/react-dom.production.min.js"),
             "lodash": path.join(__dirname, "node_modules/lodash/lodash.min.js"),
         },
-        extensions: [".js", ".ts", ".jsx", ".json"] //指定解析的后缀webpack默认js|json
+        extensions: [".js", ".ts", ".jsx", ".json"] //指定解析的后缀,如果不指定webpack默认直解析js|json
     },
     module: {
         rules: [
