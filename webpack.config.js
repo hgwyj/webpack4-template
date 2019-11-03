@@ -9,7 +9,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const setMPA = () => {
     const entry = {};
     const htmlwebpackplugins = [];
-    const entryFiles = glob.sync(path.join(__dirname, "src/*/index.*(js|jsx|tsx)"));
+    const entryFiles = glob.sync(path.join(__dirname, "src/*/index.*(js|jsx|ts|tsx)"));
     Object.keys(entryFiles).forEach((index) => {
         const file = entryFiles[index];
         const match = file.match(/src\/(.*)\/index\.(js|jsx)$/);
