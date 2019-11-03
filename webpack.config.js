@@ -129,13 +129,15 @@ module.exports = {
     },
     plugins: [
         new Frienderrorsonly(),
-        // this.hooks.done.tap("done", (stats) => {
-        //     if (stats.compilation.errors && stats.compilation.errors.length
-        //         && process.argv.indexOf("--watch") == -1) {
-        //         console.log("build error");
-        //         process.exit(1);
-        //     }
-        // }),
+        function () {
+            this.hooks.done.tap("done", (stats) => {
+                if (stats.compilation.errors && stats.compilation.errors.length
+                    && process.argv.indexOf("--watch") == -1) {
+                    console.log("build error");
+                    process.exit(1);
+                }
+            })
+        },
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name]_[contenthash:4].css"
