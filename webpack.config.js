@@ -1,6 +1,7 @@
 "use strict";
 const path = require("path");
 const glob = require("glob");
+const Frienderrorsonly = require("friendly-errors-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -44,6 +45,7 @@ module.exports = {
         path: path.join(__dirname, "dist"),
         filename: '[name]_[chunkhash:4].js'
     },
+    stats: "errors-only",
     mode: "production",
     resolve: {
         alias: {
@@ -80,17 +82,17 @@ module.exports = {
                             modules: true
                         }
                     },
-                    "less-loader",
                     {
                         loader: "postcss-loader", //使用postcss进行css样式后缀的补全
                         options: {
                             plugins: () => [
                                 require('autoprefixer')({
-                                    browsers: ['last 2 version', '>1%', 'ios 7']
+                                    overrideBrowserslist: ['last 2 version', '>1%', 'ios 7']
                                 })
                             ]
                         }
                     },
+                    "less-loader",
                 ]
             },
             {
@@ -126,6 +128,14 @@ module.exports = {
         ]
     },
     plugins: [
+        new Frienderrorsonly(),
+        // this.hooks.done.tap("done", (stats) => {
+        //     if (stats.compilation.errors && stats.compilation.errors.length
+        //         && process.argv.indexOf("--watch") == -1) {
+        //         console.log("build error");
+        //         process.exit(1);
+        //     }
+        // }),
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name]_[contenthash:4].css"

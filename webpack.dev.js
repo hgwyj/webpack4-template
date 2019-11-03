@@ -75,6 +75,7 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new frienderrorsonly(),
         new webpack.HotModuleReplacementPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name]_[contenthash:8].css"

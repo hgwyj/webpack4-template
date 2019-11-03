@@ -46,6 +46,7 @@ module.exports = {
         libraryTarget: "umd"
     },
     mode: "none",
+    stats: "errors-only",
     resolve: {
         alias: {
             "react": path.join(__dirname, "node_modules/react/cjs/react.production.min.js"),

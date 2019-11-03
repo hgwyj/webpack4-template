@@ -4,8 +4,8 @@
         "@babel/preset-react"
     ],
     "plugins": [
-        //"@babel/plugin-syntax-dynamic-import", //babel动态import
-        // "@babel/plugin-proposal-class-properties", //babel 将class中属性编译插件
-        //"@babel/plugin-transform-runtime" //禁止babel自动注入辅助代码，所有辅助代码都进行引用
+        "@babel/plugin-syntax-dynamic-import", //babel动态import
+        "@babel/plugin-proposal-class-properties", //babel 将class中属性编译插件
+        "@babel/plugin-transform-runtime" //禁止babel自动注入辅助代码，所有辅助代码都进行引用
     ]
 }
