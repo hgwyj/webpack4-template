@@ -9,10 +9,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const setMPA = () => {
     const entry = {};
     const htmlwebpackplugins = [];
-    const entryFiles = glob.sync(path.join(__dirname, "src/*/index.*(js|jsx|ts|tsx)"));
+    const entryFiles = glob.sync(path.join(__dirname, "src/*/index-server.*(js|jsx|ts|tsx)"));
     Object.keys(entryFiles).forEach((index) => {
         const file = entryFiles[index];
-        const match = file.match(/src\/(.*)\/index\.(js|jsx)$/);
+        const match = file.match(/src\/(.*)\/index-server\.(js|jsx|ts|tsx)$/);
         const pagename = match && match[1];
         entry[pagename] = file;
         htmlwebpackplugins.push(
@@ -42,9 +42,10 @@ module.exports = {
     entry,
     output: {
         path: path.join(__dirname, "dist"),
-        filename: '[name]_[chunkhash:4].js'
+        filename: '[name]-server.js',
+        libraryTarget: "umd"
     },
-    mode: "production",
+    mode: "none",
     resolve: {
         alias: {
             "react": path.join(__dirname, "node_modules/react/cjs/react.production.min.js"),
