@@ -7,11 +7,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Frienderrorsonly = require('friendly-errors-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const pjRoot = process.cwd();
 // 实现多页面打包func
 const setMPA = () => {
   const entry = {};
   const htmlwebpackplugins = [];
-  const entryFiles = glob.sync(path.join(__dirname, 'src/*/index.*(js|jsx|ts|tsx)'));
+  const entryFiles = glob.sync(path.join(pjRoot, 'src/*/index.*(js|jsx|ts|tsx)'));
   Object.keys(entryFiles).forEach((index) => {
     const file = entryFiles[index];
     const match = file.match(/src\/(.*)\/index\.(js|jsx)$/);
@@ -19,7 +20,7 @@ const setMPA = () => {
     entry[pagename] = file;
     htmlwebpackplugins.push(
       new HtmlWebpackPlugin({
-        template: path.join(__dirname, `src/${pagename}/index.html`),
+        template: path.join(pjRoot, `src/${pagename}/index.html`),
         filename: `${pagename}.html`,
         chunks: [pagename, 'commons'], // script 标签进行引用模块名称
         inject: true,
@@ -44,7 +45,7 @@ module.exports = {
   stats: 'errors-only',
   entry,
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(pjRoot, 'dist'),
     filename: '[name]_[chunkhash:4].js',
   },
   module: {
