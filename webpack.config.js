@@ -1,11 +1,17 @@
 "use strict";
 const path = require("path");
 const glob = require("glob");
+const Webpack = require("webpack");
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin'); //将dll文件insert into html与htmlwebpackplugin搭配使用
 const Frienderrorsonly = require("friendly-errors-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// const speedMeasureWebpackPlugin = require("speed-measure-webpack-plugin"); //webpack package 速度分析
+// const smp = new speedMeasureWebpackPlugin();
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;//构建体积分析插件
+const TerserPlugin = require("terser-webpack-plugin"); //并行压缩
 //实现多页面打包func
 const setMPA = () => {
     const entry = {};
@@ -30,6 +36,11 @@ const setMPA = () => {
                     minifyJS: true,
                     collapseWhitespace: true
                 }
+            }),
+            new AddAssetHtmlPlugin({
+                filepath: path.join(__dirname, 'build/library/*.dll.js'),
+                includeSourcemap: false,
+                hash: true,
             })
         )
     });
@@ -39,6 +50,7 @@ const setMPA = () => {
     };
 };
 const { entry, htmlwebpackplugins } = setMPA();
+
 module.exports = {
     entry,
     output: {
@@ -61,6 +73,12 @@ module.exports = {
                 test: /.(js|jsx)$/,
                 exclude: /node_modules/,
                 use: [
+                    {
+                        loader: "thread-loader", //开启多进程打包
+                        options: {
+                            workers: 4
+                        }
+                    },
                     "babel-loader?cacheDirectory=true",//开启缓存,二次编译时使用缓存
                     // "eslint-loader"//增加eslint检测
                 ]
@@ -128,6 +146,8 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(),
+        // new BundleAnalyzerPlugin(),
         new Frienderrorsonly(),
         function () {
             this.hooks.done.tap("done", (stats) => {
@@ -138,14 +158,13 @@ module.exports = {
                 }
             })
         },
-        new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: "[name]_[contenthash:4].css"
         }),
         new OptimizeCSSAssetsPlugin({
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano') //css处理器
-        })
+        }),
     ].concat(htmlwebpackplugins),
     optimization: {
         splitChunks: {
@@ -158,6 +177,11 @@ module.exports = {
                     minChunks: 2
                 }
             }
-        }
+        },
+        minimizer: [
+            new TerserPlugin({
+                parallel: true
+            })
+        ]
     }
 };
