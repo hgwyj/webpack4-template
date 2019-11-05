@@ -36,11 +36,6 @@ const setMPA = () => {
                     minifyJS: true,
                     collapseWhitespace: true
                 }
-            }),
-            new AddAssetHtmlPlugin({
-                filepath: path.join(__dirname, 'build/library/*.dll.js'),
-                includeSourcemap: false,
-                hash: true,
             })
         )
     });
@@ -147,6 +142,9 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new Webpack.DllReferencePlugin({
+            manifest: require('./build/library/library.json')
+        }),
         // new BundleAnalyzerPlugin(),
         new Frienderrorsonly(),
         function () {
@@ -165,7 +163,11 @@ module.exports = {
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano') //css处理器
         }),
-    ].concat(htmlwebpackplugins),
+    ].concat(htmlwebpackplugins).concat(new AddAssetHtmlPlugin({
+        filepath: path.join(__dirname, 'build/library/*.dll.js'),
+        includeSourcemap: false,
+        hash: true,
+    })),
     optimization: {
         splitChunks: {
             minSize: 0,
