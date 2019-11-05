@@ -32,7 +32,7 @@ const setMPA = () => {
           minifyJS: true,
           collapseWhitespace: true,
         },
-      }),
+      })
     );
   });
   return {
