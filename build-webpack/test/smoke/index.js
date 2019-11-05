@@ -6,9 +6,9 @@ const mocha = new Mocha({
     timeout: "10000ms"
 });
 //改变当前进程运行路径
-process.chdir(path.join(__dirname, "smoke/template"));
+process.chdir(path.join(__dirname, "template"));
 rimraf("./dist", () => {
-    const productConfig = require("../../lib/webpack.base.js");
+    const productConfig = require("../../lib/webpack.prod.js");
     webpack(productConfig, (err, stats) => {
         if (err) {
             console.error(err);

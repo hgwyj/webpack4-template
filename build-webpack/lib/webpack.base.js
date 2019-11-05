@@ -122,6 +122,7 @@ module.exports = {
   },
   plugins: [
     new Frienderrorsonly(),
+    // new CleanWebpackPlugin(),
     function errorPlugin() {
       this.hooks.done.tap('done', (stats) => {
         if (stats.compilation.errors && stats.compilation.errors.length
@@ -131,7 +132,6 @@ module.exports = {
         }
       });
     },
-    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name]_[contenthash:4].css',
     }),
