@@ -1,7 +1,7 @@
 {
-  "name": "builder-webpack",
+  "name": "builde-webpack-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "project for webpack4",
   "main": "index.js",
   "scripts": {
     "test": "istanbul cover ./node_modules/.bin/_mocha",

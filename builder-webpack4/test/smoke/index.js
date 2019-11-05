@@ -8,7 +8,7 @@ const mocha = new Mocha({
 //改变当前进程运行路径
 process.chdir(path.join(__dirname, "template"));
 rimraf("./dist", () => {
-    const productConfig = require("../../lib/webpack.prod.js");
+    const productConfig = require("../../lib/webpack.prod.js.js");
     webpack(productConfig, (err, stats) => {
         if (err) {
             console.error(err);
