@@ -6,6 +6,7 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin'); //将dll文
 const Frienderrorsonly = require("friendly-errors-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');//开启模块的缓存
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // const speedMeasureWebpackPlugin = require("speed-measure-webpack-plugin"); //webpack package 速度分析
@@ -60,6 +61,7 @@ module.exports = {
             "react-dom": path.join(__dirname, "node_modules/react-dom/cjs/react-dom.production.min.js"),
             "lodash": path.join(__dirname, "node_modules/lodash/lodash.min.js"),
         },
+        modules: [path.join(__dirname, "node_modules")],
         extensions: [".js", ".ts", ".jsx", ".json"] //指定解析的后缀,如果不指定webpack默认直解析js|json
     },
     module: {
@@ -163,6 +165,7 @@ module.exports = {
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano') //css处理器
         }),
+        new HardSourceWebpackPlugin()
     ].concat(htmlwebpackplugins).concat(new AddAssetHtmlPlugin({
         filepath: path.join(__dirname, 'build/library/*.dll.js'),
         includeSourcemap: false,
@@ -181,8 +184,9 @@ module.exports = {
             }
         },
         minimizer: [
-            new TerserPlugin({
-                parallel: true
+            new TerserPlugin({ //开启并行压缩
+                parallel: true,
+                cache: true//开启缓存
             })
         ]
     }
