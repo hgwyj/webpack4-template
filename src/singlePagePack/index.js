@@ -1,1 +1,0 @@
-document.write("hello webpack4 test");
