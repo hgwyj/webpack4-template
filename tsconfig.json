@@ -2,12 +2,12 @@
   "compilerOptions": {
     "outDir": "./dist",
     "noImplicitAny": true,
-    "target": "es6",
+    "target": "es5",
     "isolatedModules": true,
     "module": "esnext",
     "jsx": "react",
+    "removeComments": true,
     "baseUrl": "./",
-    // 搭配path进行使用
     "sourceMap": false,
     "allowJs": false,
     "noImplicitUseStrict": true,
@@ -16,19 +16,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "typeRoots": [
-      "node",
-      "node_modules/@types",
-      "./typings"
-    ]
+    "typeRoots": ["node", "node_modules/@types", "./typings"]
   },
-  "include": [
-    "src/**/*",
-    "typings/*.d.ts",
-  ],
-  "exclude": [
-    "node_modules",
-    "lib",
-    "es"
-  ],
+  "include": ["src/**/*", "typings/*.d.ts"],
+  "exclude": ["node_modules", "lib", "es"]
 }
