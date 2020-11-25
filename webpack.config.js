@@ -4,8 +4,8 @@ const glob = require("glob");
 const Webpack = require("webpack");
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin'); //将dll文件insert into html与htmlwebpackplugin搭配使用
 const Frienderrorsonly = require("friendly-errors-webpack-plugin");
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 转换成link标签
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // css压缩
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');//开启模块的缓存
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -24,6 +24,7 @@ const setMPA = () => {
         const pagename = match && match[1];
         entry[pagename] = file;
         htmlwebpackplugins.push(
+            // html 压缩
             new HtmlWebpackPlugin({
                 template: path.join(__dirname, `src/${pagename}/index.html`),
                 filename: `${pagename}.html`,
@@ -90,7 +91,7 @@ module.exports = {
             {
                 test: /.less$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    MiniCssExtractPlugin.loader, // 与style-loader 功能冲突
                     {
                         loader: "css-loader",
                         options: {
@@ -101,7 +102,7 @@ module.exports = {
                         loader: "postcss-loader", //使用postcss进行css样式后缀的补全
                         options: {
                             plugins: () => [
-                                require('autoprefixer')({
+                                require('autoprefixer')({ // css 后置处理器
                                     overrideBrowserslist: ['last 2 version', '>1%', 'ios 7']
                                 })
                             ]
@@ -161,6 +162,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename: "[name]_[contenthash:4].css"
         }),
+        // css 压缩
         new OptimizeCSSAssetsPlugin({
             assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano') //css处理器
